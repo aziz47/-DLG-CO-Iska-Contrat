@@ -1,0 +1,22 @@
+<table id="example1" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th ng-repeat="h in headers">//h//</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="contrat in filtersData">
+        <td>//contrat.id//</td>
+        <td>//contrat.objet//</td>
+        <td>//contrat.createdBy//</td>
+        <td>//contrat.currentState//</td>
+        <td>//contrat.createdAt//</td>
+        <td>//contrat.Type//</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th ng-repeat="h in headers">//h//</th>
+    </tr>
+    </tfoot>
+</table>

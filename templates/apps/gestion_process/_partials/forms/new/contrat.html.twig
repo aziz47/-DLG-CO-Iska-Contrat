@@ -1,0 +1,123 @@
+<div class="card-body">
+    <h4 class="mt-3">Identification du contrat</h4>
+    {{ is_granted('ROLE_JURIDIQUE') ? "<i>Vous êtes membre du service juridique, votre demande de contrat sera automatiquement transformée en contrat.</i>" : '' }}
+    <hr>
+    <div class="row mt-2">
+        <div class="col">
+            <div class="form-group">
+                <label for="">{{ form_label(form.objet) }}</label>
+                {{ form_widget(form.objet) }}
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="">{{ form_label(form.typeDemande) }}</label>
+                {{ form_widget(form.typeDemande) }}
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">{{ form_label(form.departementInitiateur) }}</label>
+                {{ form_widget(form.departementInitiateur) }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">{{ form_label(form.identiteCocontractant) }}</label>
+                {{ form_widget(form.identiteCocontractant) }}
+            </div>
+        </div>
+    </div>
+    <h4>Conditions du contrat</h4>
+    <hr>
+    <div class="row mt-1">
+        <div class="col">
+            <div class="form-group">
+                <label for="">{{ form_label(form.clausesParticulieres) }}</label>
+                {{ form_widget(form.clausesParticulieres) }}
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-3">
+            <div class="form-group">
+                <label for="">{{ form_label(form.entreeVigueurAt) }}</label>
+                {{ form_widget(form.entreeVigueurAt) }}
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="">{{ form_label(form.finContratAt) }}</label>
+                {{ form_widget(form.finContratAt) }}
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="">{{ form_label(form.delaiDenonciation) }}</label>
+                {{ form_widget(form.delaiDenonciation) }}
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label for="">{{ form_label(form.modeFacturation) }}</label>
+                {{ form_widget(form.modeFacturation) }}
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">{{ form_label(form.periodicitePaiement) }}</label>
+                {{ form_widget(form.periodicitePaiement) }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="">{{ form_label(form.modeReglement) }}</label>
+                {{ form_widget(form.modeReglement) }}
+            </div>
+        </div>
+    </div>
+    <h4 class="mt-3">Conditions du renouvellement</h4>
+    <hr>
+    <div class="row mt-1">
+        <div class="col">
+            <div class="form-group">
+                <label for="">{{ form_label(form.modeRenouvellement) }}</label>
+                {{ form_widget(form.modeRenouvellement) }}
+            </div>
+        </div>
+    </div>
+    <h4 class="mt-3">Conditions du modification</h4>
+    <hr>
+    <div class="row mt-1">
+        <div class="col">
+            <div class="form-group">
+                <label for="">{{ form_label(form.objetConditionModification) }}</label>
+                {{ form_widget(form.objetConditionModification) }}
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col">
+            <div class="form-group">
+                <label for="">{{ form_label(form.libConditionModification) }}</label>
+                {{ form_widget(form.libConditionModification) }}
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col">
+            <div class="form-group">
+                <label for="">{{ form_label(form.documents) }}</label>
+                {{ form_widget(form.documents) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-footer">
+    <button class="btn btn-sm btn-info">{{ button_label|default('Créer la demande de contrat') }}</button>
+</div>

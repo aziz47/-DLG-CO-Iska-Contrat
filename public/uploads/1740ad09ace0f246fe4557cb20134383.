@@ -1,0 +1,18 @@
+<?php
+echo PHP_EOL;
+$ldaprdn = "CN=Pédjoulalé OUATTARA,OU=MOOV-CI,DC=etisalat-africa,DC=net";
+$ldappass = "Nana.Lyam@2025";
+
+$ldapconn = ldap_connect("AD-Serv") or die("Impossible de se connecter au serveur LDAP.");
+
+if ($ldapconn){
+	$ldapbind = ldap_bind($ldapconn, $ldaprdn, $ldappass);
+
+	if($ldapbind){
+		echo "Connexion LDAP rÃ©ussie...";
+	}else{
+		echo "Connexion Ã©chouÃ©e...";
+	}
+}
+echo PHP_EOL;
+?>

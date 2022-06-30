@@ -1,0 +1,34 @@
+{% extends 'apps/reporting/mail/EXCEL/base.html.twig' %}
+{% block body %}
+<table id="example1" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        {% for h in headers %}
+            <th>{{ h }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for o in filtersData %}
+        <tr>
+            <td>{{ o.id }}</td>
+            <td>{{ o.statut.lib }}</td>
+            <td>{{ o.sourceDisposition }}</td>
+            <td>{{ o.reference }}</td>
+            <td>{{ o.pointsAbordes }}</td>
+            <td>{{ o.obligation }}</td>
+            <td>{{ o.sanctions }}</td>
+            <td>{{ o.prevues }}</td>
+            <td>{{ o.responsable.user.displayName }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        {% for h in headers %}
+            <th>{{ h }}</th>
+        {% endfor %}
+    </tr>
+    </tfoot>
+</table>
+{% endblock %}

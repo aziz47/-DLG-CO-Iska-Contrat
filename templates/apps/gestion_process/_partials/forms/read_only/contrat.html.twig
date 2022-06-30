@@ -1,0 +1,150 @@
+<h4 class="mt-3">Identification du contrat</h4>
+<hr>
+<div class="row mt-2">
+    <div class="col">
+        <div class="form-group">
+            <label for="">Objet</label>
+            <input type="text" class="form-control" value="{{object.objet}}" disabled>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="form-group">
+            <label for="">Type de demande</label>
+            <input type="text" class="form-control" value="{{object.typeDemande.lib}}" disabled>
+        </div>
+    </div>
+</div>
+<div class="row mt-1">
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">Département initiateur</label>
+            <input type="text" class="form-control" value="{{object.departementInitiateur.lib}}" disabled>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">Identité co-contractant</label>
+            <input type="text" class="form-control" value="{{object.identiteCocontractant}}" disabled>
+        </div>
+    </div>
+</div>
+<h4>Conditions du contrat</h4>
+<hr>
+<div class="row mt-1">
+    <div class="col">
+        <div class="form-group">
+            <label for="">Clauses Particulières</label>
+            <textarea class="form-control" rows="10" style="resize: none;" disabled>
+                {{object.clausesParticulieres}}
+            </textarea>
+        </div>
+    </div>
+</div>
+<div class="row mt-1">
+    <div class="col-3">
+        <div class="form-group">
+            <label for="">Date d'entrée en vigueur</label>
+            <input type="text" class="form-control" value="{{object.entreeVigueurAt | date('d-m-Y') }}" disabled>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label for="">Date de fin du contrat</label>
+            <input type="text" class="form-control" value="{{object.finContratAt | date('d-m-Y') }}" disabled>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label for="">Délai de dénonciation</label>
+            <input type="text" class="form-control" value="{{object.delaiDenonciation}}" disabled>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label for="">Mode de facturation</label>
+            <input type="text" class="form-control" value="{{object.modeFacturation.lib}}" disabled>
+        </div>
+    </div>
+</div>
+<div class="row mt-1">
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">Périodicité de paiement</label>
+            <input type="text" class="form-control" value="{{object.periodicitePaiement}}" disabled>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">Mode de paiement</label>
+            <input type="text" class="form-control" value="{{object.modeFacturation.lib}}" disabled>
+        </div>
+    </div>
+</div>
+<h4 class="mt-3">Conditions du renouvellement</h4>
+<hr>
+<div class="row mt-1">
+    <div class="col">
+        <div class="form-group">
+            <label for="">Mode de renouvellement</label>
+            <input type="text" class="form-control" value="{{object.modeRenouvellement.lib}}" disabled>
+        </div>
+    </div>
+</div>
+<h4 class="mt-3">Conditions du modification</h4>
+<hr>
+<div class="row mt-1">
+    <div class="col">
+        <div class="form-group">
+            <label for="">Objet des conditions de modifications</label>
+            <input type="text" class="form-control" value="{{object.objetConditionModification}}" disabled>
+        </div>
+    </div>
+</div>
+<div class="row mt-1">
+    <div class="col">
+        <div class="form-group">
+            <label for="">Détails des conditions de modifications</label>
+            <textarea class="form-control" rows="10" style="resize: none;" disabled>
+                {{object.libConditionModification}}
+            </textarea>
+        </div>
+    </div>
+</div>
+<div class="row mt-1">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Fichiers joints</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Nom du document</th>
+                        <th>Ajouté le</th>
+                        <th>Télécharger</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for doc in object.documentContrats  %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ doc.originalName }}</td>
+                            <td>{{ doc.createdAt | date('d-m-Y') }}</td>
+                            <td>
+                                <a href="{{ '/uploads/' ~ doc.path }}" target="_blank" download>
+                                    <button type="button" class="btn btn-block btn-primary" download="{{ doc.originalName }}">Télécharger</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>

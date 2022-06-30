@@ -1,0 +1,21 @@
+<table id="example1" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th ng-repeat="h in headers">//h//</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="autorisation in filtersData">
+        <td>//autorisation.id//</td>
+        <td>//autorisation.objet//</td>
+        <td>//autorisation.createdBy//</td>
+        <td>//autorisation.currentState//</td>
+        <td>//autorisation.createdAt//</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th ng-repeat="h in headers">//h//</th>
+    </tr>
+    </tfoot>
+</table>

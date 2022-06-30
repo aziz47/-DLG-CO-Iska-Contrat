@@ -1,0 +1,38 @@
+<div class="form-group">
+    <label for="exampleSelectRounded0">Etat de la demande</label>
+    <select class="custom-select rounded-0" ng-model="chosenFilters.currentState">
+        <option value="en_attente_manager">En attente de validation par le manager</option>
+        <option value="demande_rejetee_manager">Demande rejétée par le manager</option>
+        <option value="demande_non_attribuee">Demande en attente d'attribution</option>
+        <option value="demande_attribuee">Demande en attente de traitement</option>
+        <option value="demande_validee">Demande validée</option>
+        <option value="demande_rejetee">Demande rejétée</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="exampleSelectRounded0">Département Initiateur</label>
+    <select class="custom-select rounded-0" ng-model="chosenFilters.departementInitiateur">
+        {% for d in deps %}
+            <option value="{{ d.id }}">{{ d.lib }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="exampleSelectRounded0">Type de demande</label>
+    <select class="custom-select rounded-0" ng-model="chosenFilters.typeDemande">
+        {% for d in typeDemandes %}
+            <option value="{{ d.id }}">{{ d.lib }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="exampleSelectRounded0">Mode de facturation</label>
+    <select class="custom-select rounded-0" ng-model="chosenFilters.modeFacturation">
+        {% for d in modeFacturations %}
+            <option value="{{ d.id }}">{{ d.lib }}</option>
+        {% endfor %}
+    </select>
+</div>

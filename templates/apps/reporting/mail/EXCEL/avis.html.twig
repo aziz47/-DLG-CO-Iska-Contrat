@@ -1,0 +1,31 @@
+{% extends 'apps/reporting/mail/EXCEL/base.html.twig' %}
+{% block body %}
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for avis in filtersData %}
+            <tr>
+                <td>{{avis.id}}</td>
+                <td>{{avis.objet}}</td>
+                <td>{{avis.createdBy.displayName}}</td>
+                <td>{{avis.renseignement}}</td>
+                <td>{{avis.niveauExecution}}</td>
+                <td>{{avis.currentState | processObjFilter}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

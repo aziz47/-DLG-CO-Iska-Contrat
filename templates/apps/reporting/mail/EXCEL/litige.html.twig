@@ -1,0 +1,32 @@
+{% extends 'apps/reporting/mail/EXCEL/base.html.twig' %}
+{% block body %}
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for litige in filtersData %}
+            <tr>
+                <td>{{ litige.id }}</td>
+                <td><button class="btn btn-info">{{ litige.isClosed ? 'Fermé' : 'En cours' }}</button></td>
+                <td>{{ litige.nature }}</td>
+                <td>{{ contrat.dateCas | date('d/m/Y')}}</td>
+                <td>{{ contrat.partieDemandeur ~ ' ' ~ contrat.partieDefendeur }}</td>
+                <td>{{ contrat.juridiction }}</td>
+                <td>{{ contrat.avocat }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'apps/base.html.twig' %}
+
+{% block title %}
+    Attribution à un agent
+{% endblock %}
+
+{% block page_title %}
+    Attribution à un agent
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <meta name="turbo-visit-control" content="reload">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <div class="card-title">Attribution de la demande à un agent</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <form action="#" method="post">
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="">Attribuer à l'agent</label>
+                                        <select id="contrat_typeDemande" name="uJuridique" class="form-control">
+                                            {% for u in uJuridique %}
+                                                <option value="{{ u.id }}">{{ u.user.displayName }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <button class="btn btn-sm btn-success" type="submit">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        {{ include('apps/gestion_process/_partials/forms/read_only/' ~ processObj ~ '.html.twig', {'object': obj}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

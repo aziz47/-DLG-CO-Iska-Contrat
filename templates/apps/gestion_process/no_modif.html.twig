@@ -1,0 +1,35 @@
+{% extends 'apps/base.html.twig' %}
+
+{% block title %}
+    Consulter la demande N°{{ obj.id }}
+{% endblock %}
+
+{% block page_title %}
+    Consulter la demande N°{{ obj.id }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <meta name="turbo-visit-control" content="reload">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <div class="card-title">Consulter la demande N°{{ obj.id }}</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        {{ include('apps/gestion_process/_partials/forms/read_only/' ~ processObj ~ '.html.twig', {'object': obj}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'apps/reporting/mail/PDF/base.html.twig' %}
+{% block body %}
+<table id="example1" class="table table-bordered table-hover" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        {% for h in headers %}
+            <th colspan="0" rowspan="0">{{ h }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in filtersData %}
+        <tr>
+            <td colspan="0" rowspan="0">{{user.id}}</td>
+            <td colspan="0" rowspan="0">{{user.nom}}</td>
+            <td colspan="0" rowspan="0">{{user.contrat}}</td>
+            <td colspan="0" rowspan="0">{{user.avis}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        {% for h in headers %}
+            <th colspan="0" rowspan="0">{{ h }}</th>
+        {% endfor %}
+    </tr>
+    </tfoot>
+</table>
+{% endblock %}

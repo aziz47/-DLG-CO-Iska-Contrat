@@ -1,0 +1,23 @@
+<table id="example1" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th ng-repeat="h in headers">//h//</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="litige in filtersData">
+            <td>// litige.id //</td>
+            <td><button class="btn btn-info">// litige.isClosed //</button></td>
+            <td>// litige.nature //</td>
+            <td>// contrat.dateCas //</td>
+            <td>// contrat.parties //</td>
+            <td>// contrat.juridiction //</td>
+            <td>// contrat.avocat //</td>
+        </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th ng-repeat="h in headers">//h//</th>
+    </tr>
+    </tfoot>
+</table>

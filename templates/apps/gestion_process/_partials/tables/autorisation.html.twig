@@ -1,0 +1,60 @@
+<div class="row animate__animated animate__fadeInUp">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Liste de tout {{ is_granted('ROLE_JURIDIQUE') ? 'les' : 'mes' }} demandes.</h3>
+                <a href="{{ path('apps_process_new', {processObj: 'autorisation'}) }}">
+                    <button type="button" class="btn btn-primary btn-flat float-right">Créer {{ is_granted('ROLE_JURIDIQUE') ? 'une autorisation' : 'une demande de d\'autorisation' }}.</button>
+                </a>
+            </div>
+            <div class="card-body">
+                {{ render(path('_partials_filters_process', {obj: obj, status: status, perms: perms})) }}
+                <hr>
+                <table id="example1" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Identifiant</th>
+                        <th>Initiateur</th>
+                        <th>Objet</th>
+                        <th>Statut</th>
+                        <th>Créé le</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for demande in avis %}
+                        <tr>
+                            <td>{{ demande.id }}</td>
+                            <td>{{ demande.createdBy.displayName }}</td>
+                            <td>{{ demande.objet }}</td>
+                            <td>{{ demande.currentState | statutContrat }}</td>
+                            <td>{{ demande.createdAt ? demande.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
+                                <a href="{{path('apps_link_process', {process: 'autorisation', slug: demande.slug})}}" target="_top">Consulter</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Identifiant</th>
+                        <th>Initiateur</th>
+                        <th>Objet</th>
+                        <th>Statut</th>
+                        <th>Créé le</th>
+                        <th>Actions</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col -->
+</div>

@@ -1,0 +1,52 @@
+{% extends 'apps/base.html.twig' %}
+
+{% block title %}
+    Traitement de la demande N°{{ obj.id }}
+{% endblock %}
+
+{% block page_title %}
+    Traitement de la demande N°{{ obj.id }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <meta name="turbo-visit-control" content="reload">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gestion_process_traitement') }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <div class="card-title">Traitement de la demande N°{{ obj.id }}</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <form action="#" method="post">
+                            <button id="validerBtn" type="button" class="btn btn-sm btn-success">Valider</button>
+                            <button id="rejeterBtn" type="button" class="btn btn-sm btn-danger">Rejeter</button>
+                            <div style="display: none;">
+                                <input id="yesRd" type="radio" value="yes" name="choice">
+                                <input id="noRd" type="radio" value="no" name="choice">
+                            </div>
+                            <div id="txt_raisons">
+                                <hr>
+                                <h5>Raisons</h5>
+                                <textarea id="txt_raisons2" class="form-control" rows="10" style="resize: none;"></textarea>
+                                <i>Veuillez justifier le choix. (5 caractères minimum)</i><br>
+                                <button id="btnEnregistrer" class="btn btn-sm btn-default mt-2">Enregistrer</button>
+                            </div>
+                        </form>
+                        <hr>
+                        {{ include('apps/gestion_process/_partials/forms/read_only/' ~ processObj ~ '.html.twig', {'object': obj}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

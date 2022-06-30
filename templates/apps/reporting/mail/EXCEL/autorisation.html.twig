@@ -1,0 +1,30 @@
+{% extends 'apps/reporting/mail/EXCEL/base.html.twig' %}
+{% block body %}
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for autorisation in filtersData %}
+            <tr>
+                <td>{{autorisation.id}}</td>
+                <td>{{autorisation.objet}}</td>
+                <td>{{autorisation.createdBy}}</td>
+                <td>{{autorisation.currentState}}</td>
+                <td>{{autorisation.createdAt}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

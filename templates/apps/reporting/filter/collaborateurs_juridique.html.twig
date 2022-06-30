@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label for="exampleSelectRounded0">Agent</label>
+    <select class="custom-select rounded-0" ng-model="chosenFilters.agent">
+        {% for d in agents %}
+            <option value="{{ d.id }}">{{ d.user.displayName }}</option>
+        {% endfor %}
+    </select>
+</div>

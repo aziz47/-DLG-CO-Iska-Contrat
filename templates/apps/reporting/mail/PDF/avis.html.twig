@@ -1,0 +1,31 @@
+{% extends 'apps/reporting/mail/PDF/base.html.twig' %}
+{% block body %}
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for avis in filtersData %}
+            <tr>
+                <td colspan="0">{{avis.id}}</td>
+                <td colspan="0">{{avis.objet}}</td>
+                <td colspan="0">{{avis.createdBy.displayName}}</td>
+                <td colspan="0">{{avis.renseignement}}</td>
+                <td colspan="0">{{avis.niveauExecution}}</td>
+                <td colspan="0">{{avis.currentState | processObjFilter}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

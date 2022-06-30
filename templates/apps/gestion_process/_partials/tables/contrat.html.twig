@@ -1,0 +1,70 @@
+
+<div class="row animate__animated animate__fadeInUp">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Liste de tout {{ is_granted('ROLE_JURIDIQUE') ? 'les' : 'mes' }} contrats.</h3>
+                <a href="{{path('apps_process_new', {processObj: 'contrat'})}}">
+                    <button type="button" class="btn btn-primary btn-flat float-right">Créer {{ is_granted('ROLE_JURIDIQUE') ? 'un contrat' : 'une demande de contrat' }}.</button>
+                </a>
+            </div>
+            <div class="card-body">
+                {{ render(path('_partials_filters_process', {obj: obj, status: status, perms: perms})) }}
+                <hr>
+                <table id="example1" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Identifiant</th>
+                        <th>Objet</th>
+                        {% if is_granted('ROLE_JURIDIQUE') %}
+                            <th>Créé par</th>
+                        {% endif %}
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for contrat in avis %}
+                        <tr>
+                            <td>{{ contrat.id }}</td>
+                            <td>{{ contrat.objet }}</td>
+                            {% if is_granted('ROLE_JURIDIQUE') %}
+                                <td>{{ contrat.createdBy.displayName }}</td>
+                            {% endif %}
+                            <td>{{ contrat.createdAt | date("d/m/Y") }}</td>
+                            <td>
+                                <span class="badge badge-{{ contrat.typeDemande.color }}">
+                                        {{ contrat.typeDemande.lib }}
+                                    </span>
+                            </td>
+                            <td>{{ contrat.currentState | statutContrat }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{path('apps_link_process', {process: 'contrat', slug: contrat.slug})}}">
+                                        <button type="button" class="btn btn-default">Consulter</button>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Identifiant</th>
+                        <th>Objet</th>
+                        {% if is_granted('ROLE_JURIDIQUE') %}
+                            <th>Créé par</th>
+                        {% endif %}
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

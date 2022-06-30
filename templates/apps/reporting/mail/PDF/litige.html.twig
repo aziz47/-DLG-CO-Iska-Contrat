@@ -1,0 +1,32 @@
+{% extends 'apps/reporting/mail/PDF/base.html.twig' %}
+{% block body %}
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for litige in filtersData %}
+            <tr>
+                <td colspan="0">{{ litige.id }}</td>
+                <td colspan="0"><button class="btn btn-info">{{ litige.isClosed ? 'Fermé' : 'En cours' }}</button></td>
+                <td colspan="0">{{ litige.nature }}</td>
+                <td colspan="0">{{ contrat.dateCas | date('d/m/Y')}}</td>
+                <td colspan="0">{{ contrat.partieDemandeur ~ ' ' ~ contrat.partieDefendeur }}</td>
+                <td colspan="0">{{ contrat.juridiction }}</td>
+                <td colspan="0">{{ contrat.avocat }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            {% for h in headers %}
+                <th>{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'apps/reporting/mail/PDF/base.html.twig' %}
+{% block body %}
+<table id="example1" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        {% for h in headers %}
+            <th>{{ h }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for contrat in filtersData %}
+    <tr>
+        <td colspan="0">{{contrat.id}}</td>
+        <td colspan="0">{{contrat.objet}}</td>
+        <td colspan="0">{{contrat.createdBy.displayName}}</td>
+        <td colspan="0">{{contrat.currentState | statutContrat}}</td>
+        <td colspan="0">{{contrat.createdAt | date('d/m/Y')}}</td>
+        <td colspan="0">{{contrat.typeDemande.lib}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        {% for h in headers %}
+            <th>{{ h }}</th>
+        {% endfor %}
+    </tr>
+    </tfoot>
+</table>
+{% endblock %}

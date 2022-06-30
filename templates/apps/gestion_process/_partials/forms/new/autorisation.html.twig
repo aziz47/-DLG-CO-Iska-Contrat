@@ -1,0 +1,39 @@
+<div class="card-body">
+    <div class="card-body">
+        <div class="row mt-2">
+            <div class="col">
+                <div class="form-group">
+                    <label for="">{{ form_label(form.objet) }}</label>
+                    {{ form_widget(form.objet) }}
+                </div>
+            </div>
+        </div>
+        {% if is_granted('ROLE_JURIDIQUE') %}
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="">{{ form_label(form.createdBy) }}</label>
+                        {{ form_widget(form.createdBy) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row mt-1">
+            <div class="col">
+                <div class="form-group">
+                    <label for="">{{ form_label(form.corps) }}</label>
+                    {{ form_widget(form.corps) }}
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col">
+                <div class="form-group">
+                    <label for="">{{ form_label(form.documents) }}</label>
+                    {{ form_widget(form.documents) }}
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-info">{{ button_label|default('Effectuer la demande') }}</button>
+    </div>
+</div>
