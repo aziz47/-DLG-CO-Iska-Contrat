@@ -38,7 +38,7 @@ let app =
                 },*/
                 {
                     id: 1,
-                    lib: "Demande d'avis et conseils",
+                    lib: "Demande d'avis et consultations",
                     slug: 'avis',
                     active: false
                 },
