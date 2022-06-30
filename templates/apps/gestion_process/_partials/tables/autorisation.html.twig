@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Liste de tout {{ is_granted('ROLE_JURIDIQUE') ? 'les' : 'mes' }} demandes.</h3>
+                <h3 class="card-title">Liste de toutes {{ is_granted('ROLE_JURIDIQUE') ? 'les' : 'mes' }} demandes.</h3>
                 <a href="{{ path('apps_process_new', {processObj: 'autorisation'}) }}">
                     <button type="button" class="btn btn-primary btn-flat float-right">Créer {{ is_granted('ROLE_JURIDIQUE') ? 'une autorisation' : 'une demande de d\'autorisation' }}.</button>
                 </a>
