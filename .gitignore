@@ -6,6 +6,9 @@ yarn.lock
 compute_stats.txt
 messenger.txt
 
+/.idea
+/.idea/*
+
 /docker
 /docker/*
 
