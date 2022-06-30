@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -32,12 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -129,17 +123,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return null;
     }
 
-    
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -213,19 +196,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getFirstName().' '.$this->getLastName().' - '.$this->getEmail();
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): string
+    public function getPassword()
     {
-        return $this->password;
+        // TODO: Implement getPassword() method.
     }
 
-    public function setPassword(string $password): self
+    public function eraseCredentials()
     {
-        $this->password = $password;
-
-        return $this;
+        // TODO: Implement eraseCredentials() method.
     }
-
 }
