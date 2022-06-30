@@ -30,4 +30,7 @@ messenger.txt
 /vendor
 /vendor/*
 
+/public/generated
+/public/generated/*
+
 docker-compose.prod.yml
