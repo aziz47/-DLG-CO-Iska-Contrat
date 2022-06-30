@@ -64,7 +64,7 @@ class NewLitige extends AbstractType
                 ]
             ])
             ->add('partieDemandeur', TextType::class, [
-                'label' => 'Partie demandeure',
+                'label' => 'Partie demanderesse',
                 'empty_data' => '',
                 'required' => false,
                 'attr' => [

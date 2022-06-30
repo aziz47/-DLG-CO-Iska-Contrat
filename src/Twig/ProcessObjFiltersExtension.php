@@ -19,10 +19,10 @@ class ProcessObjFiltersExtension extends AbstractExtension
     {
         $vals = [
     		'demande_non_attribuee' => 'En attente - Service Juridique',
-		'avis_title' => 'Avis & Conseils',
-            'avis_new_title' => "Nouvelle demande d'avis & de conseils",
-            'avis_modif_title' => "Modifier la demande d'avis & de conseils",
-            'avis_new_block_title' => "Effectuer une demande d'avis / conseil",
+		'avis_title' => 'Avis & consultations',
+            'avis_new_title' => "Nouvelle demande d'avis & de consultations",
+            'avis_modif_title' => "Modifier la demande d'avis & de consultations",
+            'avis_new_block_title' => "Effectuer une demande d'avis / consultation",
 
             'contrat_title' => 'Gestion Contractuelle',
             'contrat_new_title' => "Nouvelle demande de contrat",

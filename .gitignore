@@ -28,3 +28,4 @@ messenger.txt
 /vendor/*
 
 docker-compose.prod.yml
+prod.env

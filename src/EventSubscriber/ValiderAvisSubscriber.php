@@ -24,14 +24,15 @@ class ValiderAvisSubscriber implements EventSubscriberInterface
 
     public function onWorkflowGestionProcessTransition(Event $event)
     {
-        /* @var ProcessObj $o */
+        //@var ProcessObj $o
+        /*
         $o = $event->getSubject();
 
         ($this->mailService)(
             $o->getCreatedBy(),
             'Demande transmise',
             'Votre demande d\'avis a été transmise au service juridique.'
-        );
+        ); */
     }
 
     public static function getSubscribedEvents()
