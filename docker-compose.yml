@@ -64,9 +64,6 @@ services:
   www:
     build: ubuntu
     container_name: iska_symfony
-    ports:
-      - "80:8000"
-      - "8080:8000"
     volumes:
       - ./:/iska
     restart: always
@@ -77,8 +74,6 @@ services:
       - iska_network
       - iska_mails
       - iska_database
-    extra_hosts:
-      - "AD-Serv:10.177.66.12"
 
 networks:
   iska_network:
