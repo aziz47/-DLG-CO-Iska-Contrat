@@ -52,7 +52,6 @@ class ObligationController extends AbstractController
             '
         );
         $nok = $sql->executeQuery(['slug' => 'nok'])->fetchAllAssociative()[0];
-        dump($ok, $nok);
 
         $allObligations = $obligationRepository->findBy(
             array(), array('id' => 'DESC')
