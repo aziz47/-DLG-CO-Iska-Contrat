@@ -10,6 +10,8 @@ parameters:
     contrat_doc_directory: '%kernel.project_dir%/public/uploads/'
 
     generated_pdf_dir: '%kernel.project_dir%/public/generated/'
+
+    app.test_mail: '%env(TEST_MAIL)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -24,6 +26,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    App\Service\Mail:
+        arguments:
+            $testMail: '%app.test_mail%'
 
     Symfony\Component\Ldap\Ldap:
         arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
