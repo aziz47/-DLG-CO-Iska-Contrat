@@ -1,7 +1,7 @@
 up:
 	clear
 	make stop
-	docker-compose -f docker-compose.yml -f docker-compose.$(arg).yml up -d --build
+	docker-compose up -d
 stop:
 	docker-compose stop
 	docker system prune -f
