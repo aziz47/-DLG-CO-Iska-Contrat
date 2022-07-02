@@ -129,6 +129,15 @@ class SaveProcessObj
             }
             $this->manager->persist($processObj);
             $this->manager->flush();
+
+            $uManagers = $this->userRepository->findByDepartementManagers($processObj->getCreatedBy()->getDepartement());
+            foreach ($uManagers as $uManager) {
+                ($this->mailService)(
+                   $uManager,
+                    'Nouvelle demande de contrat dans le département enregistrée',
+                    'Une nouvelle demande de contrat a été émise par ' . $processObj->getCreatedBy()->displayName() . ', elle est en attente de validation de votre part.'
+                );
+            }
         }
         elseif ($processObj instanceof Autorisation){
             $processObj->setResponse("");

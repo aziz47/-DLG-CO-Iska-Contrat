@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Departement;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -67,6 +68,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->andWhere('u.roles LIKE :role')
             ->setParameter('role', '%'.$roles.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByDepartementManagers(Departement $departement)
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.departement', 'd')
+            ->andWhere('d = :dep')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('dep', $departement)
+            ->setParameter('role', '%ROLE_USER_MANAGER%')
             ->getQuery()
             ->getResult()
             ;

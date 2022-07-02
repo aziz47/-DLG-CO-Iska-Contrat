@@ -46,7 +46,7 @@
                     <a href="{{ path('apps_process_home', {processObj: 'avis'} )}}" class="nav-link">Avis & Consultations</a>
                 </li>
 
-                {% if is_granted("ROLE_USER_JURIDIQUE") %}
+                {% if is_granted("ROLE_JURIDIQUE") %}
                     <li class="nav-item">
                         <a href="{{path('app_reporting_home')}}" class="nav-link">Autres</a>
                     </li>
