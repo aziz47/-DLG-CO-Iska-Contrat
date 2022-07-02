@@ -1,0 +1,7 @@
+services:
+
+  www:
+    ports:
+      - "9974:8000"
+    extra_hosts:
+      - "AD-Serv:10.177.66.12"

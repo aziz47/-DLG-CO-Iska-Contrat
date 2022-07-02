@@ -22,9 +22,9 @@ class DefaultMailService
     public function __invoke(User $user, string $object, string $text)
     {
         $email = (new TemplatedEmail())
-            ->from('email.sys.abj@gmail.com')
+            ->from('iska@dlgo-group.ci')
             ->to(new Address(
-                'azizkamadou17@gmail.com'
+                $user->getEmail()
             ))
             ->subject($object)
 

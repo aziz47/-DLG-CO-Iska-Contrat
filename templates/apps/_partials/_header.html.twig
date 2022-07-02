@@ -43,21 +43,14 @@
                     <a href="{{ path('apps_process_home', {processObj: 'autorisation'} )}}" class="nav-link">Autorisations</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ path('apps_process_home', {processObj: 'avis'} )}}" class="nav-link">Avis & Conseils</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{path('app_reporting_home')}}" class="nav-link">Autres</a>
+                    <a href="{{ path('apps_process_home', {processObj: 'avis'} )}}" class="nav-link">Avis & Consultations</a>
                 </li>
 
-                {#{% if is_granted("ROLE_USER_BOSS_JURIDIQUE") %}
-                    <li class="nav-item dropdown" id="azkam">
-                        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Autres</a>
-                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                            <li><a href="{{path('app_reporting_home')}}" class="dropdown-item">Reporting</a></li>
-                            <li><a href="{{path('apps_modele_contrat')}}" class="dropdown-item">Statistiques</a></li>
-                        </ul>
+                {% if is_granted("ROLE_JURIDIQUE") %}
+                    <li class="nav-item">
+                        <a href="{{path('app_reporting_home')}}" class="nav-link">Autres</a>
                     </li>
-                {% endif %}#}
+                {% endif %}
 
 
                 <li class="nav-item">

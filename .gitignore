@@ -1,3 +1,4 @@
+.env
 composer.lock
 symfony.lock
 yarn.lock
@@ -26,6 +27,3 @@ messenger.txt
 
 /vendor
 /vendor/*
-
-docker-compose.prod.yml
-prod.env
