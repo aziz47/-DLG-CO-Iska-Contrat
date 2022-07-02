@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Abstracts\ProcessObj;
+use App\Entity\AvisConseils\Avis;
 use App\Repository\Abstracts\ProcessObjRepository;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,6 +40,10 @@ class TraitementJuridiqueProcess
                 throw new \Exception('La transition est impossible');
             }
 
+            if($processObj instanceof Avis){
+                $processObj->setReponse( ($transition === 'valider_demande' ? 'Demande validée' : 'Demande rejetée') . ' | ' .$processObj->getReponse() );
+            }
+
             if($this->gestionProcessStateMachine->can($processObj, $transition)){
                 $processObj
                     ->setFinalJuridiqueAt(CarbonImmutable::now());
@@ -50,5 +55,7 @@ class TraitementJuridiqueProcess
         }catch(\Exception $e){
             return false;
         }
+
+        return false;
     }
 }

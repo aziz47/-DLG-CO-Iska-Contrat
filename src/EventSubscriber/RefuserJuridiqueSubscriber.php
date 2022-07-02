@@ -36,7 +36,7 @@ class RefuserJuridiqueSubscriber implements EventSubscriberInterface
         ($this->mailService)(
             $o->getCreatedBy(),
             'Demande refusée',
-            'Votre demande ' . $this->processObjToStr($o, true) . ' a été refusée.'
+            'Votre demande ' . ($this->processObjToStr)($o, true) . ' a été refusée.'
         );
     }
 
