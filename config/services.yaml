@@ -27,6 +27,6 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Service\Mail:
+    App\Service\Mail\DefaultMailService:
         arguments:
             $testMail: '%app.test_mail%'
