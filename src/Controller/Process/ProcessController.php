@@ -212,7 +212,6 @@ class ProcessController extends AbstractController
             }
             $this->addFlash(
                 'success',
-                //TODO : MàJ message de succès
                 'La demande a bien été attribuée à l\'agent'
             );
             return $this->redirectToRoute('apps_process_home', ['processObj' => $processObj]);
@@ -269,11 +268,9 @@ class ProcessController extends AbstractController
 
             $transition = $choice == 'yes' ? 'valider_demande' : 'refuser_demande';
             $traitementJuridiqueSrv->run($e, $transition);
-            //TODO : Mettre en place des messages de succès personnalisés
             $this->addFlash(
                 'success',
-                //TODO : MàJ message de succès
-                'Message de succès'
+                'La demande d\'avis a bien été ' . ($choice == 'yes' ? 'validée' : 'refusée') . '.'
             );
             return $this->redirectToRoute('apps_process_home', ['processObj' => $processObj]);
         }

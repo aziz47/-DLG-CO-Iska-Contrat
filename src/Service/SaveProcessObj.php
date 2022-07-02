@@ -12,6 +12,7 @@ use App\Entity\Contrat\DocumentContrat;
 use App\Entity\User;
 use App\Repository\Abstracts\ProcessObjRepository;
 use App\Repository\UserJuridiqueRepository;
+use App\Repository\UserRepository;
 use App\Service\Mail\DefaultMailService;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -44,8 +45,12 @@ class SaveProcessObj
      * @var ProcessObjToStr
      */
     private $processObjToStr;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
-    public function __construct(DefaultMailService $mailService, ProcessObjToStr $processObjToStr, EntityManagerInterface $manager,WorkflowInterface $gestionProcessStateMachine, ProcessObjRepository $processObjRepository, UserJuridiqueRepository $userJuridiqueRepository)
+    public function __construct(UserRepository $userRepository,DefaultMailService $mailService, ProcessObjToStr $processObjToStr, EntityManagerInterface $manager,WorkflowInterface $gestionProcessStateMachine, ProcessObjRepository $processObjRepository, UserJuridiqueRepository $userJuridiqueRepository)
     {
         $this->gestionProcessStateMachine = $gestionProcessStateMachine;
         $this->processObjRepository = $processObjRepository;
@@ -53,6 +58,7 @@ class SaveProcessObj
         $this->userJuridiqueRepository = $userJuridiqueRepository;
         $this->mailService = $mailService;
         $this->processObjToStr = $processObjToStr;
+        $this->userRepository = $userRepository;
     }
 
     public function run(ProcessObj $processObj, User $user, $options = []){
@@ -83,6 +89,18 @@ class SaveProcessObj
                 $this->gestionProcessStateMachine->apply($processObj, 'valider_avis');
                 $this->manager->persist($processObj);
                 $this->manager->flush();
+
+                //Envoi de mails aux User Boss
+                /* @var User[] $usersJuridiqueBoss */
+                $usersJuridiqueBoss = $this->userRepository->findByRoles('ROLE_USER_BOSS_JURIDIQUE');
+
+                foreach ($usersJuridiqueBoss as $userJBoss){
+                    ($this->mailService)(
+                        $userJBoss,
+                        'Nouvelle demande d\'avis en attente',
+                        'Une nouvelle demande d\'avis de '. $processObj->getCreatedBy()->displayName() .' est en attente.'
+                     );
+                }
             }
         }
         elseif ($processObj instanceof Contrat){
