@@ -1,17 +1,5 @@
 services:
 
-  maildev:
-    ports:
-    - "9928:80"
-
-  phpmyadmin:
-    ports:
-      - "9927:80"
-
-  redis-commander:
-    ports:
-      - "9930:8081"
-
   www:
     ports:
       - "9974:8000"
