@@ -42,6 +42,24 @@
             <div class="info-box bg-green">
                 <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
                 <div class="info-box-content">
+                    <span class="info-box-text">Nombre total d'obligations OK</span>
+                    <span class="info-box-number">{{ ok }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-green">
+                <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Nombre total d'obligations Non OK</span>
+                    <span class="info-box-number">{{ nok }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-green">
+                <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                <div class="info-box-content">
                     <a href="{{ path('apps_obligation_new') }}" target="_top">
                     <span class="info-box-text text-white"> Enregistrer une nouvelle obligation</span>
                     </a>

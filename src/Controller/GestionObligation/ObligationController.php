@@ -29,14 +29,38 @@ class ObligationController extends AbstractController
     /**
      * @Route("/", name="apps_obligation_home", methods={"GET"})
      */
-    public function index(ObligationRepository $obligationRepository): Response
+    public function index(ObligationRepository $obligationRepository, EntityManagerInterface $em): Response
     {
+        $conn = $em->getConnection();
+        $sql = $conn->prepare(
+            '
+                SELECT count(s.id) as :slug
+                FROM t_obligation_statut s, t_obligation o
+                WHERE s.id = o.statut_id AND s.slug = ":slug"
+            '
+        );
+
+        $ok = $sql->executeQuery(['slug' => 'ok'])->fetchAllAssociative()[0];
+        $conn->close();
+
+        $conn = $em->getConnection();
+        $sql = $conn->prepare(
+            '
+                SELECT count(s.id) as :slug
+                FROM t_obligation_statut s, t_obligation o
+                WHERE s.id = o.statut_id AND s.slug = ":slug"
+            '
+        );
+        $nok = $sql->executeQuery(['slug' => 'nok'])->fetchAllAssociative()[0];
+
         $allObligations = $obligationRepository->findBy(
             array(), array('id' => 'DESC')
         );
         return $this->render('apps/gestion_obligation/index.html.twig', [
             'obligations' => $allObligations,
             'nombreTotal' => count($allObligations),
+            'ok' => $ok['ok'],
+            'nok' => $nok['nok']
         ]);
     }
 
