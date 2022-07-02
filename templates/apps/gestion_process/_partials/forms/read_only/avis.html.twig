@@ -67,3 +67,16 @@
         </div>
     </div>
 </div>
+<hr>
+{% if object.isFinished %}
+<div class="row mt-1">
+    <div class="col">
+        <div class="form-group">
+            <label for="">Réponse</label>
+            <textarea class="form-control" rows="10" style="resize: none;" disabled>
+                {{object.reponse}}
+            </textarea>
+        </div>
+    </div>
+</div>
+{% endif %}

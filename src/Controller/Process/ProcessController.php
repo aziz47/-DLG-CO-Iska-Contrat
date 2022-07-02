@@ -261,7 +261,12 @@ class ProcessController extends AbstractController
 
         //On récupére le choix effecuté par l'agent juridique
         $choice = $request->request->get('choice');
+        $raisons = $request->request->get('txt_raisons2');
         if($choice != null){
+            if($e instanceof Avis){
+                $e->setReponse($raisons);
+            }
+
             $transition = $choice == 'yes' ? 'valider_demande' : 'refuser_demande';
             $traitementJuridiqueSrv->run($e, $transition);
             //TODO : Mettre en place des messages de succès personnalisés
@@ -363,7 +368,12 @@ class ProcessController extends AbstractController
         $link = 'no_modif';
         switch ($perms){
             case 'all_user':
-                if($processObj->getCurrentState() !== 'en_attente_manager'){
+                if($processObj->isFinished()){
+                    if($this->isGranted('ROLE_JURIDIQUE') && !($processObj instanceof Avis)){
+                        $link = 'no_modif';
+                    }
+                    break;
+                }elseif($processObj->getCurrentState() !== 'en_attente_manager'){
                     $link = 'modif';
                 }
                 break;
