@@ -6,9 +6,6 @@ yarn.lock
 compute_stats.txt
 messenger.txt
 
-/.idea
-/.idea/*
-
 /docker
 /docker/*
 
@@ -34,3 +31,8 @@ messenger.txt
 /public/generated/*
 
 docker-compose.prod.yml
+/public/build
+/public/build/*
+
+/public/uploads
+/public/uploads/*

@@ -241,4 +241,9 @@ abstract class ProcessObj
         $this->slug = $faker->uuid;
         return $this;
     }
+
+    public function isFinished(): bool
+    {
+        return in_array($this->getCurrentState(), ['demande_validee', 'demande_rejetee']);
+    }
 }

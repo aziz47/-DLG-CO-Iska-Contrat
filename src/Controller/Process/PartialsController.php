@@ -126,6 +126,7 @@ class PartialsController extends AbstractController
         //Récupération de la classe concernée
         $classe = self::REPOS[$obj];
 
+        $avis = [];
         $repo = $doctrine->getRepository($classe);
         switch($status){
             case 'all_user':
@@ -248,6 +249,7 @@ class PartialsController extends AbstractController
                     'departementInitiateur' => $user->getDepartement(),
                     'currentState' => 'demande_rejetee'
                 ]);
+                break;
             case 'all_manager_ok_juridique':
                 $avis = $repo->findBy([
                     'departementInitiateur' => $user->getDepartement(),
