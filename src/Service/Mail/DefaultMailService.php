@@ -14,7 +14,7 @@ class DefaultMailService
      */
     private $mailer;
 
-    public function __construct(MailerInterface $mailer)
+    public function __construct($customEnv, MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -24,7 +24,7 @@ class DefaultMailService
         $email = (new TemplatedEmail())
             ->from('iska@dlgo-group.ci')
             ->to(new Address(
-                $user->getEmail()
+                $customEnv ?? $user->getEmail()
             ))
             ->subject($object)
 
