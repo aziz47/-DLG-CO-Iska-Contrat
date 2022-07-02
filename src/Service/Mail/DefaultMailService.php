@@ -13,10 +13,12 @@ class DefaultMailService
      * @var MailerInterface
      */
     private $mailer;
+    private $testMail;
 
-    public function __construct($customEnv, MailerInterface $mailer)
+    public function __construct($testMail, MailerInterface $mailer)
     {
         $this->mailer = $mailer;
+        $this->testMail = $testMail;
     }
 
     public function __invoke(User $user, string $object, string $text)
@@ -24,7 +26,7 @@ class DefaultMailService
         $email = (new TemplatedEmail())
             ->from('iska@dlgo-group.ci')
             ->to(new Address(
-                $customEnv ?? $user->getEmail()
+                $this->testMail ?? $user->getEmail()
             ))
             ->subject($object)
 
