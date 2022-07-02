@@ -1,5 +1,5 @@
 <h4 class="mt-3">Demande d'avis / conseil {{ object.id }}</h4>
-
+<!-- TO-DO : Réaliser un affichage avec la réponse de la demande d'avis -->
 <div class="row mt-2">
     <div class="col">
         <div class="form-group">
@@ -13,7 +13,9 @@
     <div class="col">
         <div class="form-group">
             <label for="">Niveau d'exécution</label>
-            <input type="text" class="form-control" value="{{object.niveauExecution}}" disabled>
+            <textarea class="form-control" rows="10" style="resize: none;" disabled>
+                {{object.niveauExecution}}
+            </textarea>
         </div>
     </div>
 </div>
@@ -65,3 +67,16 @@
         </div>
     </div>
 </div>
+<hr>
+{% if object.isFinished %}
+<div class="row mt-1">
+    <div class="col">
+        <div class="form-group">
+            <label for="">Réponse</label>
+            <textarea class="form-control" rows="10" style="resize: none;" disabled>
+                {{object.reponse}}
+            </textarea>
+        </div>
+    </div>
+</div>
+{% endif %}

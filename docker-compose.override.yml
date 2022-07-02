@@ -1,9 +1,7 @@
 services:
 
   www:
-    env_file:
-      - prod.env
     ports:
-      - "9975:8000"
+      - "9974:8000"
     extra_hosts:
       - "AD-Serv:10.177.66.12"

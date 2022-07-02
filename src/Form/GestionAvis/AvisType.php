@@ -36,12 +36,14 @@ class AvisType extends AbstractType
                     'style' => "resize: none;"
                 ]
             ])
-            ->add('niveauExecution', TextType::class, [
+            ->add('niveauExecution', TextareaType::class, [
                 'label' => 'Niveau d\'exécution',
                 'empty_data' => '',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
+                    'rows' => 10,
+                    'style' => "resize: none;"
                 ]
             ])
             ->add('documents', FileType::class, [
