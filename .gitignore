@@ -27,3 +27,9 @@ messenger.txt
 
 /vendor
 /vendor/*
+
+/public/build
+/public/build/*
+
+/public/uploads
+/public/uploads/*
