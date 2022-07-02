@@ -13,8 +13,6 @@ services:
       - "9930:8081"
 
   www:
-    env_file:
-      - dev.env
     ports:
       - "9974:8000"
     extra_hosts:
