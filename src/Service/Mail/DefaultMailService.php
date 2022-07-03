@@ -24,7 +24,7 @@ class DefaultMailService
     public function __invoke(User $user, string $object, string $text)
     {
         $email = (new TemplatedEmail())
-            ->from('iska@dlgo-group.ci')
+            ->from('postmaster@sandbox62ae71fbc2524968a1d0e2b625c77c35.mailgun.org	')
             ->to(new Address(
                 $this->testMail ?? $user->getEmail()
             ))
