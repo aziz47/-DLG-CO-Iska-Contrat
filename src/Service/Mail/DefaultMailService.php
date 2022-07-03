@@ -23,6 +23,7 @@ class DefaultMailService
 
     public function __invoke(User $user, string $object, string $text)
     {
+        /*
         $email = (new TemplatedEmail())
             ->from('postmaster@sandbox62ae71fbc2524968a1d0e2b625c77c35.mailgun.org	')
             ->to(new Address(
@@ -37,6 +38,6 @@ class DefaultMailService
                 'text' => $text
             ]);
 
-        $this->mailer->send($email);
+        $this->mailer->send($email);*/
     }
 }
