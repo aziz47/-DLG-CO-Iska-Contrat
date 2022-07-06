@@ -27,6 +27,11 @@ class UserJuridique
      */
     private $user;
 
+    /**
+     * @ORM\OneToOne(targetEntity=UserJuridiqueData::class, mappedBy="UserJuridique", cascade={"persist", "remove"})
+     */
+    private $data;
+
 
     public function __construct()
     {
@@ -45,6 +50,23 @@ class UserJuridique
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getData(): ?UserJuridiqueData
+    {
+        return $this->data;
+    }
+
+    public function setData(UserJuridiqueData $data): self
+    {
+        // set the owning side of the relation if necessary
+        if ($data->getUserJuridique() !== $this) {
+            $data->setUserJuridique($this);
+        }
+
+        $this->data = $data;
 
         return $this;
     }
