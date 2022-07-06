@@ -5,15 +5,19 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\UserJuridique;
 use App\Entity\Stats\UserJuridiqueStats;
+use App\Entity\UserJuridiqueData;
+use Carbon\CarbonInterval;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
-     * @var \Faker\Generator
+     * @var Generator
      */
     private $faker;
     /**
@@ -23,7 +27,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
     public function __construct(UserPasswordHasherInterface  $hasher)
     {
-        $this->faker = \Faker\Factory::create();
+        $this->faker = Factory::create();
         $this->hasher = $hasher;
     }
 
@@ -54,6 +58,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                         ;
                         $manager->persist($userJuridique);
 
+                        $ujD = (new UserJuridiqueData())
+                            ->setNbrJourImpartiContrat(
+                                CarbonInterval::days(5)
+                            )->setUserJuridique($userJuridique);
+                        $manager->persist($ujD);
+
                         $uJS = (new UserJuridiqueStats)
                         ->setUJuridique($userJuridique)
                         ->setPerfContrat(0)
@@ -67,6 +77,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                     $userJuridique = (new UserJuridique())
                         ->setUser($user)
                     ;
+
+                        $ujD = (new UserJuridiqueData())
+                            ->setNbrJourImpartiContrat(
+                                CarbonInterval::days(5)
+                            )->setUserJuridique($userJuridique);
+                        $manager->persist($ujD);
 
                         $uJS = (new UserJuridiqueStats)
                         ->setUJuridique($userJuridique)
