@@ -13,10 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ObligationType extends AbstractType
+class ObligationNewType extends AbstractType
 {
     /**
      * @var SourceListeRepository
@@ -57,15 +58,12 @@ class ObligationType extends AbstractType
         $obl = $this->importanceObligationRepository->findBy($opt);
 
         $builder
-            ->add('sourceList', ChoiceType::class, [
+            ->add('sourceList', TextType::class, [
                 'label' => 'Type de la source',
+                'mapped' => false,
                 'empty_data' => '',
-                'choices' => $sources,
-                'choice_label'=> function($choice, $key, $value){
-                    return $choice->getLib();
-                },
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ]
             ])
             ->add('sourceDisposition', TextareaType::class, [
@@ -75,15 +73,12 @@ class ObligationType extends AbstractType
                     'class' => 'form-control',
                 ]
             ])
-            ->add('referenceListe', ChoiceType::class, [
+            ->add('referenceListe', TextType::class, [
                 'label' => 'Type de la référence',
+                'mapped' => false,
                 'empty_data' => '',
-                'choices' => $refs,
-                'choice_label'=> function($choice, $key, $value){
-                    return $choice->getLib();
-                },
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ]
             ])
             ->add('reference', TextareaType::class, [

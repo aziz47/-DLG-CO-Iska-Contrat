@@ -45,6 +45,18 @@ class ObligationRepository extends ServiceEntityRepository
         }
     }
 
+    public function getNumberObligationPerStatut(string $statut)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('count(s.id)')
+            ->join('o.statut', 's')
+            ->andWhere('s.slug = :val')
+            ->setParameter('val', $statut)
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
     // /**
     //  * @return Obligation[] Returns an array of Obligation objects
     //  */
