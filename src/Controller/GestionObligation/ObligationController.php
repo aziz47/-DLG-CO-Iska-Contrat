@@ -71,9 +71,7 @@ class ObligationController extends AbstractController
 
             /** @var User $user */
             $user = $this->getUser();
-            $obligation->setResponsable(
-                $userJuridiqueRepository->findOneBy(['user' => $user])
-            )->setPrevues("");
+            $obligation->setPrevues("");
             $manager->persist($obligation);
 
             if ($fichier) {

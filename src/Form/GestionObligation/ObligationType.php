@@ -7,6 +7,7 @@ use App\Repository\Obligation\ImportanceObligationRepository;
 use App\Repository\Obligation\ReferenceListeRepository;
 use App\Repository\Obligation\SourceListeRepository;
 use App\Repository\Obligation\StatutObligationRepository;
+use App\Repository\UserJuridiqueRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -34,18 +35,24 @@ class ObligationType extends AbstractType
      * @var ImportanceObligationRepository
      */
     private $importanceObligationRepository;
+    /**
+     * @var UserJuridiqueRepository
+     */
+    private $userJuridiqueRepository;
 
     public function __construct(
         SourceListeRepository $sourceListeRepository,
         ReferenceListeRepository $referenceListeRepository,
         StatutObligationRepository $statutObligationRepository,
-        ImportanceObligationRepository $importanceObligationRepository
+        ImportanceObligationRepository $importanceObligationRepository,
+        UserJuridiqueRepository $userJuridiqueRepository
     )
     {
         $this->sourceListeRepository = $sourceListeRepository;
         $this->referenceListeRepository = $referenceListeRepository;
         $this->statutObligationRepository = $statutObligationRepository;
         $this->importanceObligationRepository = $importanceObligationRepository;
+        $this->userJuridiqueRepository = $userJuridiqueRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -55,8 +62,21 @@ class ObligationType extends AbstractType
         $refs = $this->referenceListeRepository->findBy($opt);
         $statuts = $this->statutObligationRepository->findAll();
         $obl = $this->importanceObligationRepository->findBy($opt);
+        $userJ = $this->userJuridiqueRepository->findAll();
 
         $builder
+            ->add('responsable', ChoiceType::class, [
+                'label' => 'Responsable de l\'obligation',
+                'empty_data' => '',
+                'choices' => $userJ,
+                'choice_label'=> function($choice, $key, $value){
+                    return $choice->getUser()->displayName();
+                },
+                'disabled' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                ]
+            ])
             ->add('sourceList', ChoiceType::class, [
                 'label' => 'Type de la source',
                 'empty_data' => '',
