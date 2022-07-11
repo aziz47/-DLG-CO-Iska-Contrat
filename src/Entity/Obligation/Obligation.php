@@ -54,7 +54,7 @@ class Obligation
     private $importanceObligation;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SourceListe::class, inversedBy="obligations")
+     * @ORM\ManyToOne(targetEntity=SourceListe::class, inversedBy="obligations", cascade={"persist"})
      */
     private $sourceList;
 

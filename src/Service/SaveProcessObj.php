@@ -140,37 +140,40 @@ class SaveProcessObj
             }
         }
         elseif ($processObj instanceof Autorisation){
-            $processObj->setResponse("");
-            foreach ($options['documents'] as $doc){
-                $fichier = md5(uniqid()).'.'.$doc->guessExtension();
-                $doc->move(
-                    $options['upload_folder'],
-                    $fichier
-                );
-                $docDB = (new DocDemande())
-                    ->setOriginalName($doc->getClientOriginalName())
-                    ->setPath($fichier)
-                    ->setDemande($processObj);
-                $this->manager->persist($docDB);
-                $processObj->addDocDemande($docDB);
-            }
-
-            //Si l'utilisateur est membre du département juridique, la demande est automatiquement validée.
-            if(in_array('ROLE_JURIDIQUE', $user->getRoles())){
-                $processObj = $this->saveContratUserJuridique($processObj, $user);
-                $processObj
-                    ->setDepartementInitiateur(
-                        $processObj->getCreatedBy()->getDepartement()
+            if ($this->gestionProcessStateMachine->can($processObj, 'valider_avis')){
+                $processObj->setResponse("");
+                foreach ($options['documents'] as $doc){
+                    $fichier = md5(uniqid()).'.'.$doc->guessExtension();
+                    $doc->move(
+                        $options['upload_folder'],
+                        $fichier
                     );
-            }else{
-                $processObj
-                    ->setDepartementInitiateur(
-                        $user->getDepartement()
-                    );
-            }
+                    $docDB = (new DocDemande())
+                        ->setOriginalName($doc->getClientOriginalName())
+                        ->setPath($fichier)
+                        ->setDemande($processObj);
+                    $this->manager->persist($docDB);
+                    $processObj->addDocDemande($docDB);
+                }
 
-            $this->manager->persist($processObj);
-            $this->manager->flush();
+                //Si l'utilisateur est membre du département juridique, la demande est automatiquement validée.
+                if(in_array('ROLE_JURIDIQUE', $user->getRoles())){
+                    $processObj = $this->saveContratUserJuridique($processObj, $user);
+                    $processObj
+                        ->setDepartementInitiateur(
+                            $processObj->getCreatedBy()->getDepartement()
+                        );
+                }else{
+                    $processObj
+                        ->setDepartementInitiateur(
+                            $user->getDepartement()
+                        );
+                }
+
+                $this->gestionProcessStateMachine->apply($processObj, 'valider_avis');
+                $this->manager->persist($processObj);
+                $this->manager->flush();
+            }
         }
 
         ($this->mailService)(

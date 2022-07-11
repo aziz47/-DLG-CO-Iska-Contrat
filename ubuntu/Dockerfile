@@ -31,4 +31,4 @@ RUN dpkg -i wkhtml.deb; apt-get install -y -f
 
 COPY php.ini /etc/php/7.4/cli
 WORKDIR /iska/
-CMD symfony serve
+CMD symfony serve --no-tls --allow-http

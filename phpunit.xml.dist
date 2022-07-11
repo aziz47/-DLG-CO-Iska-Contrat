@@ -15,6 +15,11 @@
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+
+        <!-- ###+ symfony/mailgun-mailer ### -->
+        <!-- MAILER_DSN=mailgun://KEY:DOMAIN@default?region=us -->
+        <!-- MAILER_DSN=mailgun+smtp://USERNAME:PASSWORD@default?region=us -->
+        <!-- ###- symfony/mailgun-mailer ### -->
     </php>
 
     <testsuites>
