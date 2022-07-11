@@ -27,6 +27,14 @@
                     <div class="row mt-2">
                         <div class="col">
                             <div class="form-group">
+                                <label for="">{{ form_label(form.responsable) }}</label>
+                                {{ form_widget(form.responsable) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="form-group">
                                 <label for="">{{ form_label(form.sourceList) }}</label>
                                 {{ form_widget(form.sourceList) }}
                             </div>

@@ -148,7 +148,7 @@ class ReportingController extends AbstractController
         //En-tête du tableau en fonction de l'objet recherché
         $headers = [
           'demande_contrat' => ['Identifiant', 'Objet', 'Créé par', 'Statut', 'Date', 'Délai de dénonciation', 'Type'],
-          'avis'  => ['Identifiant', 'Objet', 'Créé par', 'Renseignement', 'Niveau d\'exécution', 'Statut'],
+          'avis'  => ['Identifiant', 'Objet / Question', 'Créé par', 'Renseignement', 'Niveau d\'exécution', 'Statut'],
           'autorisation'  => ['Identifiant', 'Objet', 'Créé par', 'Statut', 'Créé le'],
           'contrat' => ['Identifiant', 'Objet', 'Créé par', 'Statut', 'Date', 'Type'],
           'litige'  => ['Identifiant', 'Statut', 'Nature', 'Date du cas', 'Nom des parties', 'Juridiction', 'Avocat'],
@@ -313,7 +313,7 @@ class ReportingController extends AbstractController
         //En-tête du tableau en fonction de l'objet recherché
         $headers = [
           'demande_contrat' => ['Identifiant', 'Objet', 'Créé par', 'Statut', 'Date', 'Délai de dénonciation', 'Type'],
-          'avis'  => ['Identifiant', 'Objet', 'Créé par', 'Renseignement', 'Niveau d\'exécution', 'Statut'],
+          'avis'  => ['Identifiant', 'Objet / Question', 'Créé par', 'Renseignement', 'Niveau d\'exécution', 'Statut'],
           'autorisation'  => ['Identifiant', 'Objet', 'Créé par', 'Statut', 'Créé le'],
           'contrat' => ['Identifiant', 'Objet', 'Créé par', 'Statut', 'Date', 'Type'],
           'litige'  => ['Identifiant', 'Statut', 'Nature', 'Date du cas', 'Nom des parties', 'Juridiction', 'Avocat'],

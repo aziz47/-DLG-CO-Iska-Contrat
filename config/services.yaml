@@ -11,7 +11,6 @@ parameters:
 
     generated_pdf_dir: '%kernel.project_dir%/public/generated/'
 
-    app.test_mail: '%env(TEST_MAIL)%'
 services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -23,10 +22,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-
-    App\Service\Mail\DefaultMailService:
-        arguments:
-            $testMail: '%app.test_mail%'
 
     Symfony\Component\Ldap\Ldap:
         arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']

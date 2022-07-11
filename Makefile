@@ -34,6 +34,7 @@ migration:
 cache-clear:
 	clear
 	docker-compose exec -u 1000 www php bin/console c:c
+	docker-compose exec -u 1000 node npm run build
 
 logs:
 	docker-compose exec www symfony serve:log

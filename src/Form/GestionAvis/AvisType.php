@@ -18,7 +18,7 @@ class AvisType extends AbstractType
     {
         $builder
             ->add('objet', TextType::class, [
-                'label' => 'Objet',
+                'label' => 'Objet / Question',
                 'empty_data' => '',
                 'required' => false,
                 'attr' => [
