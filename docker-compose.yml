@@ -59,7 +59,7 @@ services:
     tty: true
     container_name: iska_node
     volumes:
-      - ./:/app
+      - ./:/app:rw
     depends_on:
       - www
 

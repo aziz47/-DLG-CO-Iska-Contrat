@@ -36,6 +36,7 @@ security:
         - { path: ^/app, roles: ROLE_USER }
 
     role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
         ROLE_JURIDIQUE: ROLE_USER
         ROLE_USER_MANAGER: ROLE_USER
         ROLE_USER_BOSS_JURIDIQUE: [ROLE_JURIDIQUE, ROLE_USER_MANAGER]

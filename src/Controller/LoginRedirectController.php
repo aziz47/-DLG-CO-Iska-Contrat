@@ -3,19 +3,23 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class IndexController extends AbstractController
+class LoginRedirectController extends AbstractController
 {
     /**
-     * @Route("/", name="app_index")
+     * @Route("/login-redirect", name="app_login_redirect")
      */
     public function index(): Response
     {
         if($this->isGranted('ROLE_ADMIN')){
             return $this->redirectToRoute('app_admin_management');
         }
-        return $this->redirectToRoute('apps_home');
+        return $this->redirectToRoute('apps_process_home', [
+            'processObj' => 'contrat'
+        ]);
     }
 }
