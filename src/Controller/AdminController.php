@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Departement;
+use App\Entity\Stats\UserJuridiqueStats;
 use App\Entity\User;
+use App\Entity\UserJuridique;
+use App\Entity\UserJuridiqueData;
 use App\Repository\DepartementRepository;
 use App\Repository\UserRepository;
+use Carbon\CarbonInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -135,6 +139,26 @@ class AdminController extends AbstractController
         );
 
         $manager->persist($user);
+
+        if($json->roles === "ROLE_JURIDIQUE"){
+            $ujD = (new UserJuridique())
+                ->setUser($user);
+            $manager->persist($ujD);
+
+            $ujData = (new UserJuridiqueData())
+                ->setUserJuridique($ujD)
+                ->setNbrJourImpartiContrat(
+                    CarbonInterval::days(5)
+                );
+            $manager->persist($ujData);
+
+            $ujS = (new UserJuridiqueStats())
+                ->setUJuridique($ujD)
+                ->setPerfContrat(0)
+                ->setPerfAvisConseils(0);
+            $manager->persist($ujS);
+        }
+
         $manager->flush();
 
         return new JsonResponse(['pass' => $pass]);
