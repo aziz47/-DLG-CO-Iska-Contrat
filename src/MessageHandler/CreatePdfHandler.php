@@ -5,6 +5,7 @@ namespace App\MessageHandler;
 use App\Message\CreatePdf;
 use Carbon\Carbon;
 use Knp\Snappy\Pdf;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -44,7 +45,7 @@ class CreatePdfHandler implements MessageHandlerInterface
      */
     private $filesystem;
 
-    public function __construct(MailerInterface $mailer, ContainerInterface $container, Environment $twig, UrlGeneratorInterface $router, Pdf $knpSnappyPdf, Filesystem $filesystem)
+    public function __construct(MailerInterface $mailer, ContainerInterface $container, Environment $twig, UrlGeneratorInterface $router, Pdf $knpSnappyPdf, Filesystem $filesystem, LoggerInterface $logger)
     {
         $this->knpSnappyPdf = $knpSnappyPdf;
         $this->router = $router;

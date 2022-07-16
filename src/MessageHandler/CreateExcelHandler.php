@@ -64,37 +64,47 @@ class CreateExcelHandler implements MessageHandlerInterface
      */
     public function __invoke(CreateExcel $createExcel): string
     {
-        $fileName = $createExcel->getName() . '/' . (Carbon::now())->format('d_m_Y_H_i_v') . '.xls';
-        $fileLocation = $this->container->getParameter('generated_pdf_dir') . $fileName;
-        //Vérification de l'existence du fichier
-        if(!$this->filesystem->exists($fileLocation))
-        {
-            //Si le fichier n'existe pas, on le génère
-            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
-            $spreadsheet = $reader->loadFromString((string) $createExcel->getHtml());
-            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
-            $writer->save($fileLocation);
+        try {
+            $this->logger->info("[SERVICE REPORTING ] DEBUT | Report Format Excel | A : " . $createExcel->getUser()->displayName());
+            $fileName = $createExcel->getName() . '/' . (Carbon::now())->format('d_m_Y_H_i_v') . '.xls';
+            $fileLocation = $this->container->getParameter('generated_pdf_dir') . $fileName;
+            $this->logger->info("[SERVICE REPORTING ] Report Format Excel | Chemin du fichier : " . $fileLocation);
+            $this->logger->info("[SERVICE REPORTING ] Report Format Excel | Génération Chemin du fichier : " . $fileLocation);
+            //Vérification de l'existence du fichier
+            if(!$this->filesystem->exists($fileLocation))
+            {
+                //Si le fichier n'existe pas, on le génère
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+                $spreadsheet = $reader->loadFromString((string) $createExcel->getHtml());
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+                $writer->save($fileLocation);
+            }
+            $this->logger->info("[SERVICE REPORTING ] Report Format Excel | Génération Chemin du fichier : " . $fileLocation . " OK ");
+            $this->logger->info("[SERVICE REPORTING ] Report Format Excel | Envoi du fichier : " . $fileLocation . " | A : " . $createExcel->getUser()->displayName());
+
+            //Envoi du mail avec le rapport
+            $email = (new TemplatedEmail())
+                ->attachFromPath($fileLocation, '')
+
+                ->from('iska-contrat@dlgco.ci')
+                ->to(new Address(
+                    $createExcel->getUser()->getEmail()
+                ))
+                ->subject("Votre reporting")
+
+                ->htmlTemplate('apps/mails/base.html.twig')
+
+                ->context([
+                    'title' => "Reporting généré",
+                    'text' => "Bonjour, vous pouvez trouver ci-joint votre rapport généré."
+                ]);
+
+            $this->mailer->send($email);
+            $this->logger->info("[SERVICE REPORTING ] FIN SUCCESS | Report Format Excel | Envoi du fichier : " . $fileLocation . " | A : " . $createExcel->getUser()->displayName());
+            return $fileLocation;
+        }catch (\Exception $e){
+            $this->logger->error("[SERVICE REPORTING ] FIN ERROR | Report Format Excel | Envoi du fichier : " . $fileLocation . " | A : " . $createExcel->getUser()->displayName());
         }
-
-        //Envoi du mail avec le rapport
-        $email = (new TemplatedEmail())
-            ->attachFromPath($fileLocation, '')
-
-            ->from('iska-contrat@dlgco.ci')
-            ->to(new Address(
-                $createExcel->getUser()->getEmail()
-            ))
-            ->subject("Votre reporting")
-
-            ->htmlTemplate('apps/mails/base.html.twig')
-
-            ->context([
-                'title' => "Reporting généré",
-                'text' => "Bonjour, vous pouvez trouver ci-joint votre rapport généré."
-            ]);
-
-        $this->mailer->send($email);
-
-        return $fileLocation;
+        return "";
     }
 }

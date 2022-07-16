@@ -127,7 +127,6 @@ class AdminController extends AbstractController
             )
             ->setEmail($json->email)
             ->setDepartement($dep);
-        dump(array_rand($city));
         $pass = $city[array_rand($city)] . '' . mt_rand(1000, 9999);
         $user->setPassword(
           $hasher->hashPassword(
