@@ -1,10 +1,10 @@
 import './mainCtrl.css';
+import Swal from 'sweetalert2';
 const $ = require('jquery');
 global.$ = global.jQuery = $;
-
 const angular = require('angular');
 
-const baseURL = '/admin';
+const baseURL = '/admin/acc_mgmt';
 
 let app =
     angular.module("adminApp", [])
@@ -16,14 +16,26 @@ let app =
         }])
 
         .controller("mainCtrl", ["$scope", "$http", "$timeout", "$log", function($scope, $http, $timeout, $log) {
+            $scope.Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000
+            });
+
             $scope.roles = [
                 {id:0, lib:'ROLE_ADMIN'}, {id:1, lib:'ROLE_JURIDIQUE'}, {id:2, lib:'ROLE_USER_MANAGER'}, {id:3, lib:'ROLE_USER_BOSS_JURIDIQUE'}, {id:4, lib:'ROLE_USER'}
             ];
+            $scope.dataReady = true;
+            $scope.beginPosTable = 0;
             $scope.dep = [];
             $scope.filters = [];
             $scope.panelUpdate = false;
             $scope.panelCreate = false;
             $scope.actualUser = {};
+            $scope.newPassword = "";
+            $scope.repeatedNewPassword = "";
+
             $scope.init = function(){
                 //Envoi des données au serveur
                 $http.post(baseURL + '/list/departement', $scope.chosenFilters).then(
@@ -38,7 +50,6 @@ let app =
                         $scope.status = response.status;
                     });
             }
-
             //Récupérer les données depuis le serveur
             $scope.fetchData = function(){
                 $scope.chosenFilters = {
@@ -64,6 +75,7 @@ let app =
 
             $scope.changeUser = function(id){
                 $scope.panelUpdate = true;
+                $scope.panelCreate = false;
                 $scope.actualUser = angular.copy($scope.data[id]);
             }
 
@@ -77,17 +89,24 @@ let app =
                         $scope.data = response.data;
                         let result = $scope.data;
                         console.log(response.data);
-                        alert('Mise à jour effectuée');
+                        $scope.Toast.fire({
+                            icon: 'success',
+                            title: 'Le compte ' + $scope.actualUser.email + ' a été mis à jour.'
+                        });
+                        $scope.actualUser = {};
                     },
                     //Erreur
                     function(response) {
                         $scope.data = response.data || 'Request failed';
                         $scope.status = response.status;
-                        alert('Erreur');
+                        $scope.Toast.fire({
+                            icon: 'error',
+                            title: 'Erreur serveur !.'
+                        });
+                        $scope.actualUser = {};
                     });
                 $scope.fetchData();
                 $scope.panelUpdate = false;
-                $scope.actualUser = {};
             }
 
             $scope.createUser = function(){
@@ -100,16 +119,76 @@ let app =
                         $scope.data = response.data;
                         let result = $scope.data;
                         console.log(response.data);
-                        alert('Compte créé. Le mot de passe est ' + $scope.data.pass);
+                        $scope.Toast.fire({
+                            icon: 'success',
+                            title: 'Compte créé avec succés.'
+                        });
                     },
                     //Erreur
                     function(response) {
                         $scope.data = response.data || 'Request failed';
                         $scope.status = response.status;
-                        alert('Erreur');
+                        $scope.Toast.fire({
+                            icon: 'error',
+                            title: 'Erreur serveur !.'
+                        });
                     });
                 $scope.panelCreate = false;
                 $scope.actualUser = {};
+                $scope.fetchData();
+            }
+
+            $scope.checkPassword = function(){
+                return ($scope.newPassword.length > 7) && ($scope.newPassword === $scope.repeatedNewPassword);
+            }
+
+            $scope.changePassword = function(){
+                $http.post(
+                    baseURL + '/update_password',
+                    {
+                        'i': $scope.actualUser.email,
+                        'p': $scope.newPassword
+                    }
+                ).then(
+                    //En cas de succès
+                    function(response) {
+                        //Code de statut
+                        $scope.status = response.status;
+                        //Données
+                        $scope.data = response.data;
+                        let result = $scope.data;
+                        console.log(response.data);
+                        $scope.Toast.fire({
+                            icon: 'success',
+                            title: 'Le mot du passe du compte ' + $scope.actualUser.email + ' a été mis à jour.'
+                        });
+                    },
+                    //Erreur
+                    function(response) {
+                        $scope.data = response.data || 'Request failed';
+                        $scope.status = response.status;
+                        $scope.Toast.fire({
+                            icon: 'error',
+                            title: 'Erreur serveur !.'
+                        });
+                    });
+                $scope.newPassword = null;
+                $scope.repeatedNewPassword = null;
+                $scope.fetchData();
+                $scope.panelUpdate = false;
+            }
+
+            $scope.moveTable = function (direction){
+                if(direction){
+                    $scope.beginPosTable += ($scope.beginPosTable > ($scope.data.length - 15) ) ? 0 : 15;
+                    return;
+                }
+                $scope.beginPosTable -= ($scope.beginPosTable > 14) ? 15 : 0;
+            }
+
+            $scope.resetFilters = function(){
+                delete $scope.mailSearch;
+                $scope.filters = {};
                 $scope.fetchData();
             }
 

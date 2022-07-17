@@ -1,8 +1,18 @@
 {% extends 'admin/base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('admin_acc_mgmt_js') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('admin_acc_mgmt_js') }}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
     <div class="row animate__animated animate__fadeInUp" ng-app="adminApp" ng-controller="mainCtrl">
-        <div class="col-3" ng-show="panelUpdate">
+        <div class="col-sm-3" ng-show="panelUpdate">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Modification d'un utilisateur.</h3>
@@ -38,6 +48,31 @@
                     <button type="button" class="btn btn-primary btn-flat float-right" ng-click="updateUser()">Valider.</button>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title text-danger">
+                        Modification du mot de passe &nbsp; //actualUser.email//
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group w-100">
+                        <label>Nouveau mot de passe</label>
+                        <input type="password" class="form-control w-100" ng-model="newPassword">
+                    </div>
+                    <div class="form-group w-100">
+                        <label>Répéter le nouveau mot de passe</label>
+                        <input type="password" class="form-control w-100" ng-model="repeatedNewPassword">
+                    </div>
+                    <hr>
+                    <button
+                            type="button"
+                            class="btn btn-flat float-right swalDefaultError"
+                            ng-class="{'btn-default': !checkPassword(), 'btn-danger': checkPassword()}"
+                            ng-disabled="!checkPassword()"
+                            ng-click="changePassword()"
+                    >Valider.</button>
+                </div>
+            </div>
         </div>
         <div class="col">
             <div class="card">
@@ -45,18 +80,36 @@
                     <h2 id="title_acc_mgmt" class="card-title">Gestion des comptes utilisateurs.</h2>
                     <span class="float-right">
                         <a href="#">
-                            <button type="button" class="btn btn-primary btn-flat" ng-click="panelCreate = !panelCreate">Création de comptes.</button>
+                            <button type="button" class="btn btn-primary btn-flat" ng-click="panelCreate = !panelCreate; panelUpdate = false;">Création de comptes.</button>
                         </a>
                     </span>
                 </div>
                 <div class="card-body">
-                    <span>Tri par département</span>
-                    <select class="custom-select rounded-0 w-25" ng-model="filters.departement" ng-change="fetchData()">
-                        <option ng-repeat="d in dep" value="//d.id//">// d.lib //</option>
-                    </select>
+                    <div class="row">
+                        <div class="col-2">
+                            <span>Tri par département</span>
+                            <select class="custom-select rounded-0" ng-model="filters.departement" ng-change="fetchData()">
+                                <option ng-repeat="d in dep" value="//d.id//">// d.lib //</option>
+                            </select>
+                        </div>
+
+                        <div class="col-2">
+                            <span>Recherche par adresse mail</span><br>
+                            <div class="input-group ">
+                                <input type="text" class="form-control" ng-model="mailSearch.email" >
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <span></span><br>
+                            <button
+                                    class="btn btn-primary btn-flat"
+                                    ng-click="resetFilters()"
+                            >Nettoyer les filtres</button>
+                        </div>
+                    </div>
                     <hr>
                     <div>
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-hover table-striped" ng-if="dataReady">
                             <thead>
                             <tr>
                                 <th>ID</th>
@@ -68,13 +121,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="user in data">
-                                    <td>//user.id//</td>
+                                <tr ng-repeat="user in data | filter:mailSearch | limitTo : 10 : beginPosTable">
+                                    <td>//$index + 1//</td>
                                     <td>//user.fname//</td>
                                     <td>//user.lname//</td>
                                     <td>//user.email//</td>
                                     <td>//user.dep//</td>
-                                    <td><button class="btn btn-sm btn-success" ng-click="changeUser($index)">Modifier</button></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" ng-click="changeUser($index)">Modifier</button>
+                                        <button class="btn btn-sm btn-danger swalDefaultError" ng-click="changeUser($index)">Réinitialiser mot de passe</button>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -88,6 +144,25 @@
                             </tr>
                             </tfoot>
                         </table>
+                        <hr>
+                        <button
+                                class="btn btn-flat float-left"
+                                ng-click="moveTable(false)"
+                                ng-class="{
+                                    'btn-default': !(beginPosTable > 14),
+                                    'btn-primary': beginPosTable > 14
+                                }"
+                                ng-disabled="beginPosTable < 15"
+                        >Précédent</button>
+                        <button
+                                class="btn btn-flat float-right btn-default"
+                                ng-click="moveTable(true)"
+                                ng-class="{
+                                    'btn-default':  (beginPosTable > (data.length - 15)),
+                                    'btn-primary': !(beginPosTable > (data.length - 15))
+                                }"
+                                ng-disabled="beginPosTable > (data.length - 15)"
+                        >Suivant</button>
                     </div>
                     <img class="mx-auto d-block" src="{{asset('img/loader.gif')}}" ng-if="!dataReady" alt="Loading...">
                 </div>
@@ -95,7 +170,7 @@
             <!-- /.card -->
 
         </div>
-        <div class="col-3" ng-show="panelCreate">
+        <div class="col-sm-3" ng-show="panelCreate">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Création d'un utilisateur.</h3>
