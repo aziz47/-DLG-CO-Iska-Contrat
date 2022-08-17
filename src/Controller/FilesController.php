@@ -14,4 +14,6 @@ class FilesController extends AbstractController
     public function getFile(Document $document){
         return $this->file('../../public/uploads'.$document->getPath());
     }
+
+
 }

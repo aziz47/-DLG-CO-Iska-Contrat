@@ -40,3 +40,15 @@ node-dev:
 	docker-compose exec -u 1000 node npm run dev
 logs:
 	docker-compose exec www symfony serve:log
+
+full-deploy:
+	docker-compose exec www composer dump-env dev
+	docker-compose exec www php bin/console d:s:d --force
+	docker-compose exec www php bin/console d:s:c
+	docker-compose exec www php bin/console d:f:l --no-interaction
+	docker-compose exec www composer dump-env prod
+	docker-compose exec www php bin/console c:c
+	docker-compose exec -u 1000 node npm run build
+	make stop
+	docker system prune -f
+	docker-compose up -d 

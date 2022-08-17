@@ -16,7 +16,7 @@ class LoginRedirectController extends AbstractController
     public function index(): Response
     {
         if($this->isGranted('ROLE_ADMIN')){
-            return $this->redirectToRoute('app_admin_management');
+            return $this->redirectToRoute('app_admin_index');
         }
         return $this->redirectToRoute('apps_process_home', [
             'processObj' => 'contrat'
