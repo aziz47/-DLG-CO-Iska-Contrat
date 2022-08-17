@@ -410,8 +410,6 @@ class ProcessController extends AbstractController
             $user, $processObj, true
         );
 
-        var_dump($processObj);
-
         return new Response($processObj->getObjet());
     }
 

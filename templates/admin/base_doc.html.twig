@@ -1,0 +1,84 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('base_template_js') }}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('base_template_js') }}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="row animate__animated animate__fadeInUp">
+        <div class="col-lg-3 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Opérations</h2>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-flat btn-success w-100">
+                        Télécharger la base documentaire.
+                    </button>
+                    <button class="btn btn-flat btn-danger w-100 mt-2">
+                        Vider la base documentaire.
+                    </button>
+                    <br><br>
+                    <div class="form-group w-100">
+                        <label>Fichiers à charger (Format ZIP)</label>
+                        <input type="file" class="btn btn-flat btn-default" ng-model="actualUser.fname">
+                    </div>
+                    <button class="btn btn-flat btn-primary w-100">
+                        Charger dans la base documentaire.
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h2 id="title_acc_mgmt" class="card-title">Modèles de contrats.</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Importé le</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for doc in docs %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ doc.originalName }}</td>
+                                <td>{{ doc.createdAt | date('d/m/Y') }}</td>
+                                <td>
+                                    <a href="{{ doc.path }}">
+                                        <button class="btn btn-sm btn-primary">
+                                            Télécharger
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Importé le</th>
+                                <th>Actions</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </div>
+    </div>
+{% endblock %}

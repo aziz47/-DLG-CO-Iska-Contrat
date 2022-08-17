@@ -1,0 +1,12 @@
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE `t_avis`;
+TRUNCATE `t_contentieux_litige`;
+TRUNCATE `t_contentieux_procedure`;
+TRUNCATE `t_contrat`;
+TRUNCATE `t_demande_autorisation`;
+TRUNCATE `t_document`;
+TRUNCATE `t_obligation`;
+TRUNCATE `t_obligation_plan_action`;
+TRUNCATE `t_obligation_preuve`;
+TRUNCATE `t_processes`;
+SET FOREIGN_KEY_CHECKS = 1;

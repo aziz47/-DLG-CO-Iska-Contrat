@@ -6,7 +6,10 @@ use App\Entity\Obligation\Document;
 use App\Entity\Obligation\Obligation;
 use App\Entity\Obligation\PlanAction;
 use App\Entity\Obligation\Preuve;
+use App\Entity\Obligation\ReferenceListe;
+use App\Entity\Obligation\SourceListe;
 use App\Entity\User;
+use App\Form\GestionObligation\ObligationNewType;
 use App\Form\GestionObligation\ObligationType;
 use App\Repository\Obligation\ObligationRepository;
 use App\Repository\UserJuridiqueRepository;
@@ -31,27 +34,6 @@ class ObligationController extends AbstractController
      */
     public function index(ObligationRepository $obligationRepository, EntityManagerInterface $em): Response
     {
-        $conn = $em->getConnection();
-        $sql = $conn->prepare(
-            '
-                SELECT count(s.id) as :slug
-                FROM t_obligation_statut s, t_obligation o
-                WHERE s.id = o.statut_id AND s.slug = ":slug"
-            '
-        );
-
-        $ok = $sql->executeQuery(['slug' => 'ok'])->fetchAllAssociative()[0];
-        $conn->close();
-
-        $conn = $em->getConnection();
-        $sql = $conn->prepare(
-            '
-                SELECT count(s.id) as :slug
-                FROM t_obligation_statut s, t_obligation o
-                WHERE s.id = o.statut_id AND s.slug = ":slug"
-            '
-        );
-        $nok = $sql->executeQuery(['slug' => 'nok'])->fetchAllAssociative()[0];
 
         $allObligations = $obligationRepository->findBy(
             array(), array('id' => 'DESC')
@@ -59,8 +41,8 @@ class ObligationController extends AbstractController
         return $this->render('apps/gestion_obligation/index.html.twig', [
             'obligations' => $allObligations,
             'nombreTotal' => count($allObligations),
-            'ok' => $ok['ok'],
-            'nok' => $nok['nok']
+            'ok' => $obligationRepository->getNumberObligationPerStatut('ok') ?? 0,
+            'nok' => $obligationRepository->getNumberObligationPerStatut('nok') ?? 0
         ]);
     }
 
@@ -71,19 +53,25 @@ class ObligationController extends AbstractController
     {
         $obligation = (new Obligation())->addPreuve((new Preuve())->addAction(new PlanAction()));
 
-        $form = $this->createForm(ObligationType::class, $obligation);
+        $form = $this->createForm(ObligationNewType::class, $obligation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $typeRef = ($form->get('referenceListe')->getData()) ?? "Néant";
+            $sourceListe = ($form->get('sourceList')->getData()) ?? "Néant";
+            $obligation->setReferenceListe(
+                (new ReferenceListe())->setLib($typeRef)->setDispoDeroulante(true)
+            );
+            $obligation->setSourceList(
+                (new SourceListe())->setLib($sourceListe)->setDispoDeroulante(true)
+            );
             //Fichier dans le formulaire
             /** @var UploadedFile $modeleContratFile */
             $fichier = $form->get('fichier')->getData();
 
             /** @var User $user */
             $user = $this->getUser();
-            $obligation->setResponsable(
-                $userJuridiqueRepository->findOneBy(['user' => $user])
-            )->setPrevues("");
+            $obligation->setPrevues("");
             $manager->persist($obligation);
 
             if ($fichier) {
@@ -122,7 +110,6 @@ class ObligationController extends AbstractController
                 $fichier = $p->get('fichiers')->getData();
                 /** @var Preuve $preuve */
                 $preuve = $p->getData();
-                dump($preuve);
                 foreach($preuve->getActions() as $a){
                     $a->setPreuve($preuve);
                     //$manager->persist($a);

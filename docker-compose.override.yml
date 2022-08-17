@@ -2,6 +2,10 @@ services:
 
   www:
     ports:
-      - "9974:8000"
+      - "9975:8000"
     extra_hosts:
       - "AD-Serv:10.177.66.12"
+
+  phpmyadmin:
+    ports:
+      - "9974:80"

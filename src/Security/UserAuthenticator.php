@@ -49,9 +49,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('apps_process_home', [
-            'processObj' => 'contrat'
-        ]));
+        return new RedirectResponse($this->urlGenerator->generate('app_login_redirect'));
     }
 
     protected function getLoginUrl(Request $request): string

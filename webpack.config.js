@@ -28,6 +28,8 @@ Encore
 
     .addEntry('reporting', './assets/js/reporting/mainCtrl.js')
 
+    .addEntry('admin_acc_mgmt_js', './assets/js/admin/account_management/mainCtrl.js')
+
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

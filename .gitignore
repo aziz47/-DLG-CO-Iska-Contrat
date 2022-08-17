@@ -18,9 +18,6 @@ messenger.txt
 /var
 /var/*
 
-/bin
-/bin/*
-
 /migrations
 /migrations/*
 
